@@ -1,7 +1,5 @@
 package brickBreaker;
 
-import emailApp.email;
-
 import javax.swing.*;
 
 public class brickBreaker {

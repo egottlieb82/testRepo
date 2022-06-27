@@ -29,7 +29,7 @@ public class email {
         //System.out.println("Your password is: " + this.password);
 
         // Combine elements to generate email
-        email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@" + department + "." + companySuffix;
+        email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@" + department + companySuffix;
         //System.out.println("Your email is: " + email);
     }
 
@@ -38,9 +38,9 @@ public class email {
         System.out.print("Enter the department code:\n1 for Sales\n2 for Development\n3 for Accounting\n0 for none\nEnter department code: ");
         Scanner in = new Scanner(System.in);
         int depChoice = in.nextInt();
-        if (depChoice == 1) { return "sales"; }
-        else if (depChoice == 2) { return "development"; }
-        else if (depChoice == 3) { return "accounting"; }
+        if (depChoice == 1) { return "sales."; }
+        else if (depChoice == 2) { return "development."; }
+        else if (depChoice == 3) { return "accounting."; }
         else { return ""; }
 
     }
