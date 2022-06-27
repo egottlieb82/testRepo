@@ -14,19 +14,21 @@ public class gamePlay extends JPanel implements KeyListener, ActionListener {
     private int totalBricks = 21;
 
     private Timer timer;
-    private int delay = 8;
+    private int delay = 1;
 
-    private int playerX = 310;
+    private int playerX = 285;
     private int playerXstart = playerX;
 
     private int ballposX = 350;
     private int ballposXstart = ballposX;
     private int ballposY = 525;
     private int ballposYstart = ballposY;
-    private int ballXdir = -1;
+    private int ballXdir = -2;
     private int ballXdirStart = ballXdir;
-    private int ballYdir = -2;
+    private int ballYdir = -4;
     private int ballYdirStart = ballYdir;
+
+    private int startCounter = 0;
 
     private mapGenerator map;
 
@@ -60,7 +62,7 @@ public class gamePlay extends JPanel implements KeyListener, ActionListener {
 
         // Paddle
         g.setColor(Color.green);
-        g.fillRect(playerX, 550, 100, 8);
+        g.fillRect(playerX, 550, 150, 8);
 
         // Ball
         g.setColor(Color.yellow);
@@ -70,6 +72,7 @@ public class gamePlay extends JPanel implements KeyListener, ActionListener {
             play = false;
             ballXdir = 0;
             ballYdir = 0;
+            startCounter = 0;
             g.setColor(Color.red);
             g.setFont(new Font("serif", Font.BOLD, 30));
             g.drawString("You Win!",  260, 300);
@@ -83,6 +86,7 @@ public class gamePlay extends JPanel implements KeyListener, ActionListener {
             play = false;
             ballXdir = 0;
             ballYdir = 0;
+            startCounter = 0;
             g.setColor(Color.red);
             g.setFont(new Font("serif", Font.BOLD, 30));
             g.drawString("Game Over, Score: " + score, 190, 300);
@@ -97,14 +101,22 @@ public class gamePlay extends JPanel implements KeyListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         timer.start();
+        if (startCounter == 1) {
+            ballXdir = -2;
+            startCounter += 2;
+        } else if (startCounter == 2) {
+            ballXdir = 2;
+            startCounter += 2;
+        }
+
         if (play) {
             Rectangle ballCheck = new Rectangle(ballposX, ballposY, 20, 20);
-            if (ballCheck.intersects(new Rectangle(playerX, 550, 100, 8))) {
+            if (ballCheck.intersects(new Rectangle(playerX, 550, 150, 8))) {
                 ballYdir = -ballYdir;
-                if (ballposX + 9 <= playerX + 49) {
-                    ballXdir = -1;
+                if (ballposX + 9 <= playerX + 74) {
+                    ballXdir = -2;
                 } else {
-                    ballXdir = 1;
+                    ballXdir = 2;
                 }
             }
 
@@ -160,13 +172,15 @@ public class gamePlay extends JPanel implements KeyListener, ActionListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            if (playerX >= 600) {
-                playerX = 600;
+            startCounter += 1;
+            if (playerX >= 550) {
+                playerX = 550;
             } else {
                 moveRight();
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            startCounter += 2;
             if (playerX <= 0) {
                 playerX = 0;
             } else {
@@ -180,7 +194,7 @@ public class gamePlay extends JPanel implements KeyListener, ActionListener {
 
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!play) {
-                play = true;
+                // play = true;
                 ballposX = ballposXstart;
                 ballposY = ballposYstart;
                 ballXdir = ballXdirStart;
