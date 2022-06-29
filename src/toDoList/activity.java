@@ -68,4 +68,12 @@ public class activity {
     public String getEvent() {
         return event;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getDueDate() {
+        return dueDate;
+    }
 }
